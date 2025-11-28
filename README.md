@@ -1,5 +1,5 @@
 1. Implementation of Linear Search Algorithm
-Question: Implement a linear search algorithm to find a given element in a list.
+
 def linearsearch(arr,key):
     for i in range(len(arr)):
         if arr[i] == key :
@@ -17,7 +17,7 @@ else :
     print("Element not found")
 ________________________________________
 2. Implementation of Binary Search Algorithm
-Question: Implement binary search to find an element in a sorted array.
+   
 def binarysearch(arr,key):
     low = 0
     high = len(arr)-1
@@ -48,6 +48,7 @@ else :
 ________________________________________
 3. Implementation of Merge Sort
 Question: Implement Merge Sort using the divide and conquer approach.
+
 def mergesort(arr):
     if len(arr)<=1:
         return arr
@@ -83,6 +84,7 @@ print("Sorted array will be ",sortedarr)
 ________________________________________
 4. Implementation of Quick Sort (Divide and Conquer)
 Question: Implement Quick Sort using divide and conquer.
+
 def quicksort(arr):
     if len(arr) <=1:
         return arr
@@ -110,6 +112,8 @@ print("Sorted array will be --> ",result)
 ________________________________________
 5. Implementation of Strassen’s Matrix Multiplication (Divide and Conquer)
 Question: Multiply two matrices using Strassen’s algorithm.
+
+
 def add_matrix(A, B):
     """Add two matrices."""
     n = len(A)
@@ -223,6 +227,8 @@ for row in C:
 ________________________________________
 6. Implementation of Knapsack using Greedy Method
 Question: Solve fractional knapsack problem using greedy approach.
+
+
 def fractional_knapsack(values, weights, capacity):
     n = len(values)
     ratio = [(values[i]/weights[i], weights[i], values[i], i) for i in range(n)]
