@@ -1,97 +1,112 @@
-________________________________________
 1. Implementation of Linear Search Algorithm
 Question: Implement a linear search algorithm to find a given element in a list.
-def linear_search(arr, target):
+def linearsearch(arr,key):
     for i in range(len(arr)):
-        if arr[i] == target:
+        if arr[i] == key :
             return i
     return -1
 
-# Example
-arr = [5, 3, 8, 6, 7]
-target = 6
-index = linear_search(arr, target)
-print(f"Element {target} found at index: {index}" if index != -1 else "Element not found")
-Output:
-Element 6 found at index: 3
+arr=list(map(int,input("Enter the elements --> ").split()))
+key=int(input("Enter the element to be search : "))
+
+result = linearsearch(arr,key)
+
+if result != -1 :
+    print(f"Element found at index {result} is {key}")
+else :
+    print("Element not found")
 ________________________________________
 2. Implementation of Binary Search Algorithm
 Question: Implement binary search to find an element in a sorted array.
-def binary_search(arr, target):
-    left, right = 0, len(arr) - 1
-    while left <= right:
-        mid = (left + right) // 2
-        if arr[mid] == target:
+def binarysearch(arr,key):
+    low = 0
+    high = len(arr)-1
+    
+    while low <= high :
+        mid = low + (high - low)//2
+        
+        if arr[mid] == key:
             return mid
-        elif arr[mid] < target:
-            left = mid + 1
-        else:
-            right = mid - 1
-    return -1
+        elif arr[mid] < key :
+            low = mid + 1
+        else :
+            high = mid - 1
+    return False
 
-# Example
-arr = [1, 3, 5, 7, 9]
-target = 5
-index = binary_search(arr, target)
-print(f"Element {target} found at index: {index}" if index != -1 else "Element not found")
-Output:
-Element 5 found at index: 2
+arr=[]
+arr=list(map(int,input("Enter the elements in the array : ").split()))
+arr.sort()
+print(arr)
+key=int(input("Enter the element to search --> "))
+result = binarysearch(arr,key)
+
+if result != False:
+    print(f"Element found at index {result} is {key}")
+else :
+    print("Not Found")
+
 ________________________________________
 3. Implementation of Merge Sort
 Question: Implement Merge Sort using the divide and conquer approach.
-def merge_sort(arr):
-    if len(arr) > 1:
-        mid = len(arr) // 2
-        L = arr[:mid]
-        R = arr[mid:]
+def mergesort(arr):
+    if len(arr)<=1:
+        return arr
+    mid = len(arr)//2
+    lefthalf=arr[:mid]
+    righthalf=arr[mid:]
+    
+    sortedhalf=mergesort(lefthalf)
+    sortedright=mergesort(righthalf)
+    
+    return merge(sortedhalf,sortedright)
+def merge(left,right):
+    result=[]
+    i=j=0
+    
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            result.append(left[i])
+            i = i + 1
+        else :
+            result.append(right[j])
+            j = j + 1
+    result.extend(left[i:])
+    result.extend(right[j:])
+    
+    return result
 
-        merge_sort(L)
-        merge_sort(R)
+arr=list(map(int,input("Enter the elements in the array --> ").split()))
+print("Original array is --> ",arr)
+sortedarr=mergesort(arr)
+print("Sorted array will be ",sortedarr)
 
-        i = j = k = 0
-
-        while i < len(L) and j < len(R):
-            if L[i] < R[j]:
-                arr[k] = L[i]
-                i += 1
-            else:
-                arr[k] = R[j]
-                j += 1
-            k += 1
-
-        while i < len(L):
-            arr[k] = L[i]
-            i += 1
-            k += 1
-        while j < len(R):
-            arr[k] = R[j]
-            j += 1
-            k += 1
-
-# Example
-arr = [12, 11, 13, 5, 6, 7]
-merge_sort(arr)
-print("Sorted array:", arr)
-Output:
-Sorted array: [5, 6, 7, 11, 12, 13]
 ________________________________________
 4. Implementation of Quick Sort (Divide and Conquer)
 Question: Implement Quick Sort using divide and conquer.
-def quick_sort(arr):
-    if len(arr) <= 1:
+def quicksort(arr):
+    if len(arr) <=1:
         return arr
-    pivot = arr[len(arr) // 2]
-    left = [x for x in arr if x < pivot]
-    middle = [x for x in arr if x == pivot]
-    right = [x for x in arr if x > pivot]
-    return quick_sort(left) + middle + quick_sort(right)
+    
+    pivot=arr[-1]
+    less=[]
+    greater=[]
+    equal=[]
+    
+    for x in arr:
+        if x < pivot :
+            less.append(x)
+        elif x > pivot :
+            greater.append(x)
+        else:
+            equal.append(x)
+    
+    return quicksort(less) + equal + quicksort(greater)
 
-# Example
-arr = [10, 7, 8, 9, 1, 5]
-sorted_arr = quick_sort(arr)
-print("Sorted array:", sorted_arr)
-Output:
-Sorted array: [1, 5, 7, 8, 9, 10]
+arr=list(map(int,input("Enter the elements in the array --> ").split()))
+print("Original array is -- > ",arr)
+
+result=quicksort(arr)
+print("Sorted array will be --> ",result)
 ________________________________________
 5. Implementation of Strassen’s Matrix Multiplication (Divide and Conquer)
 Question: Multiply two matrices using Strassen’s algorithm.
@@ -306,7 +321,7 @@ def main():
 if __name__ == "__main__":
     main()
 
-Greedy Algorithms Menu:
+#Greedy Algorithms Menu:
 1. Fractional Knapsack
 2. Graph Coloring
 3. Exit
@@ -402,35 +417,6 @@ main()
 ________________________________________
 8. Implementation of Traveling Salesperson Problem (Dynamic Programming)
 Question: Solve TSP using dynamic programming (bitmasking approach).
-def tsp(graph):
-    n = len(graph)
-    memo = [[None]*n for _ in range(1<<n)]
-
-    def dp(mask, pos):
-        if mask == (1<<n) - 1:
-            return graph[pos][0]
-        if memo[mask][pos] is not None:
-            return memo[mask][pos]
-        ans = float('inf')
-        for city in range(n):
-            if mask & (1 << city) == 0:
-                ans = min(ans, graph[pos][city] + dp(mask | (1 << city), city))
-        memo[mask][pos] = ans
-        return ans
-
-    return dp(1, 0)
-
-# Example
-graph = [[0, 10, 15, 20],
-         [10, 0, 35, 25],
-         [15, 35, 0, 30],
-         [20, 25, 30, 0]]
-print("Minimum TSP cost:", tsp(graph))
-Output:
-Minimum TSP cost: 80
-
-
-
 n = int(input("Enter number of cities: "))
 dist = []
 
@@ -470,6 +456,14 @@ result = tsp(0, start_mask)
 
 print("\nMinimum cost is -->", result)
 
+
+output
+# Enter number of cities: 2
+Enter distance matrix: 0 2
+Enter distance matrix: 1 3
+
+Minimum cost is --> 3
+
 ________________________________________
 9. Implementation of Valid Parentheses
 Question: Check if a string of parentheses is valid.
@@ -494,3 +488,6 @@ else :
     print("Enter valid parenthesis")
 Output:
 The string '({[]})' is valid
+________________________________________
+
+
